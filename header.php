@@ -402,3 +402,29 @@ if($_SESSION['id']==''){
           </div>
       </aside>
       <!--sidebar end-->
+<?php 
+	$menus_qry = mysqli_query($dbconn,"select * from menu where id IN 1,2,3,4,7,8,9,10,11");
+	while($record = mysqli_fetch_array($menus_qry)){
+		$menus[$record[$record['parent']][$record['id']]] = $record;
+	}
+?>
+
+<?php
+//create a page menus.php pass data parent,menus to that page
+	if(isset($menus[$parent])) {
+		foreach ($menus[$parent] as $key => $menu) {
+			if(isset($menus[$menu['id']])){ ?>
+				<ul class="sub">
+					<?php include('menu.php',array('menus'=>$menus,'parent'=>$menu['id'])); ?>
+				</ul>
+			<? }
+			else{ ?>
+				<li class="active">
+					<a class="" href="<?php echo $menu['link']; ?>">
+						<i class="<?php echo $menu['icon']; ?>"></i><span><?php echo $menu['label']; ?></span>
+					</a>
+				</li>
+			<?php }
+		}
+	}						
+?>
