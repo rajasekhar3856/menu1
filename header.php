@@ -405,7 +405,7 @@ if($_SESSION['id']==''){
 <?php 
 	$menus_qry = mysqli_query($dbconn,"select * from menu where id IN 1,2,3,4,7,8,9,10,11");
 	while($record = mysqli_fetch_array($menus_qry)){
-		$menus[$record[$record['parent']][$record['id']]] = $record;
+		$menus[$record['parent']][$record['id']] = $record;
 	}
 ?>
 
